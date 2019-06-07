@@ -1,5 +1,5 @@
 ---
-- name: display slaves privates ipv4
+- name: test
   when: debug == true
   debug:
     msg: "{{ hostvars[item]['ansible_facts']['ens4']['ipv4']['address'] }}"
@@ -18,3 +18,16 @@
     owner: root
     group: bind
     mode: 0644
+
+- name: template named db internal zone
+  template:
+    src: ./db.defaultzone.local.j2
+    dest: /var/cache/bind/data/db.defaultzone.local
+
+- name: ensure that file ownerships is ok
+  file:
+    owner: bind
+    group: bind
+    path: "{{ item }}"
+  with_items:
+    - "/var/cache/bind/data/db.defaultzone.local"

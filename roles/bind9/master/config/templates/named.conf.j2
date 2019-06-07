@@ -8,16 +8,23 @@ controls {
 options {
     listen-on port 53 { any; };
     listen-on-v6 { any; };
-    directory "/var/cache/bind";
+    directory     "/var/cache/bind";
     recursion no;
     allow-query { any; };
 #    allow-transfer {
 #        localhost;
 #        192.168.1.6;
-#    }; # Slaves addresses here
+#    }; # Todo slaves ip addresses here
 
     allow-new-zones yes;
     request-ixfr no;
     dnssec-validation auto;
 };
 
+# Internal zone definitions
+zone "{{ default_zone }}" {
+    type master;
+    file "data/db.defaultzone.local";
+    allow-update { key rndc-key; };
+    notify yes;
+};

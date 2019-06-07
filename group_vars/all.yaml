@@ -1,2 +1,3 @@
 ---
 debug: true
+default_zone: dns.local.
