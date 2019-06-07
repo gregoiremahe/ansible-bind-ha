@@ -28,3 +28,10 @@ zone "{{ default_zone }}" {
     allow-update { key rndc-key; };
     notify yes;
 };
+
+zone "{{ default_reverse_zone }}" {
+    type master;
+    file "data/db.reverse-defaultzone.local";
+    allow-update { key rndc-key; };
+    notify yes;
+};

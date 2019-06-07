@@ -24,6 +24,14 @@
     src: ./db.defaultzone.local.j2
     dest: /var/cache/bind/data/db.defaultzone.local
 
+- name: template named db internal reverse zone
+  template:
+    src: ./db.reverse-defaultzone.local.j2
+    dest: /var/cache/bind/data/db.reverse-defaultzone.local
+  notify:
+  - bind9-restart
+
+
 - name: ensure that file ownerships is ok
   file:
     owner: bind
@@ -31,3 +39,6 @@
     path: "{{ item }}"
   with_items:
     - "/var/cache/bind/data/db.defaultzone.local"
+    - "/var/cache/bind/data/db.reverse-defaultzone.local"
+  notify:
+  - bind9-restart

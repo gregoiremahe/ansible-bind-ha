@@ -1,0 +1,18 @@
+$TTL 86400	; 1 day
+@			IN SOA	{{ hostvars[inventory_hostname]['groups']['master'][0] }}.{{ default_zone }} root.{{ default_zone }} (
+				2018010700 ; Serial
+				3600       ; Refresh (1 hour)
+				3600       ; Retry (1 hour)
+				604800     ; Expire (1 week)
+				3600       ; Minimum (1 hour)
+)
+{% for server in hostvars[inventory_hostname]['groups']['all'] %}
+@		NS	{{ server }}.{{ default_zone }}
+{% endfor %}
+@		PTR	{{ default_zone }}
+{% for server in hostvars[inventory_hostname]['groups']['all'] %}
+{{ server }}		A	{{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }}
+{% endfor %}
+{% for server in hostvars[inventory_hostname]['groups']['all'] %}
+{{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'].split('.')[::-1][:reverse_size_ipv4] | join('.') }}		PTR	{{ server }}.{{ default_zone }}
+{% endfor %}
