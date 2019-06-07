@@ -1,0 +1,25 @@
+---
+- hosts: all
+  gather_facts: false
+  roles:
+    - { role: network/vrack-ifup, tags: vrack-ifup }
+    - { role: network/firewall, tags: firewall }
+    - { role: bind9/preinstall, tags: bind9-preinstall }
+
+- hosts: master
+  gather_facts: false
+  roles:
+    - { role: bind9/master/rndc, tags: bind9-master-rndc }
+    - { role: bind9/master/config, tags: bind9-master-cfg }
+
+- hosts: slaves
+  gather_facts: false
+  roles:
+    - { role: bind9/slaves/rndc, tags: bind9-slaves-rndc }
+    - { role: bind9/slaves/config, tags: bind9-slaves-cfg }
+
+- hosts: all
+  gather_facts: false
+  roles:
+    - { role: bind9/master/check, tags: bind9-master-check }
+    - { role: bind9/slaves/check, tags: bing9-slaves-check }
