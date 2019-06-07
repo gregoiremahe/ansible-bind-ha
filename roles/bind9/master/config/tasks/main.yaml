@@ -18,11 +18,15 @@
     owner: root
     group: bind
     mode: 0644
+  notify:
+  - bind9-restart
 
 - name: template named db internal zone
   template:
     src: ./db.defaultzone.local.j2
     dest: /var/cache/bind/data/db.defaultzone.local
+  notify:
+  - bind9-restart
 
 - name: template named db internal reverse zone
   template:
@@ -30,7 +34,6 @@
     dest: /var/cache/bind/data/db.reverse-defaultzone.local
   notify:
   - bind9-restart
-
 
 - name: ensure that file ownerships is ok
   file:
