@@ -1,0 +1,8 @@
+---
+- name: network vrack
+  copy:
+    dest: /etc/network/interfaces.d/70-vrack.cfg
+    content: "auto ens4\niface ens4 inet dhcp\n"
+  notify:
+  - network-restart
+

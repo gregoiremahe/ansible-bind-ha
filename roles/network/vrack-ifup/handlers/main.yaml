@@ -1,0 +1,4 @@
+- name: network-restart
+  service:
+    name: networking
+    state: restarted
