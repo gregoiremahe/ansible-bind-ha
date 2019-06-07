@@ -1,0 +1,6 @@
+---
+- name: Install bind9
+  apt:
+    name: ['bind9', 'bind9utils', 'dnsutils', 'bind9-doc']
+    update_cache: yes
+
