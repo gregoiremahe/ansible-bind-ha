@@ -1,0 +1,13 @@
+---
+- name: Generate RNDC key
+  shell: rndc-confgen -a -b 512 -k designate -r /dev/urandom -c /etc/bind/rndc.key
+  args:
+    creates: /root/.ansible_generate_rndc_key
+
+- name: Protecting key file
+  file:
+    path: /etc/bind/rndc.key
+    mode: 0600
+    owner: bind
+    group: bind
+
