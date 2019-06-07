@@ -1,0 +1,20 @@
+---
+- name: display slaves privates ipv4
+  when: debug == true
+  debug:
+    msg: "{{ hostvars[item]['ansible_facts']['ens4']['ipv4']['address'] }}"
+  with_items:
+  - "{{ hostvars[inventory_hostname]['groups']['slaves'] }}"
+
+- name: create folder /var/cache/bind/data
+  file:
+    path: /var/cache/bind/data
+    state: directory
+
+- name: template named config
+  template:
+    src: ./named.conf.j2
+    dest: /etc/bind/named.conf.options
+    owner: root
+    group: bind
+    mode: 0644

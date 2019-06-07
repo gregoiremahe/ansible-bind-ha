@@ -7,7 +7,7 @@
     - { role: bind9/preinstall, tags: bind9-preinstall }
 
 - hosts: master
-  gather_facts: false
+  gather_facts: true
   roles:
     - { role: bind9/master/rndc, tags: bind9-master-rndc }
     - { role: bind9/master/config, tags: bind9-master-cfg }

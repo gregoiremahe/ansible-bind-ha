@@ -1,0 +1,23 @@
+include "/etc/bind/rndc.key";
+
+# Allow rndc management
+controls {
+    inet {{ hostvars[hostvars[inventory_hostname]['groups']['master'][0]]['ansible_facts']['ens3']['ipv4']['address'] }} port 953 allow { any; } keys { "designate"; };
+};
+
+options {
+    listen-on port 53 { any; };
+    listen-on-v6 { any; };
+    directory "/var/cache/bind";
+    recursion no;
+    allow-query { any; };
+#    allow-transfer {
+#        localhost;
+#        192.168.1.6;
+#    }; # Slaves addresses here
+
+    allow-new-zones yes;
+    request-ixfr no;
+    dnssec-validation auto;
+};
+
