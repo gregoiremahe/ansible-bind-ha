@@ -2,7 +2,7 @@ include "/etc/bind/rndc.key";
 
 # Allow rndc management
 controls {
-    inet {{ hostvars[hostvars[inventory_hostname]['groups']['master'][0]]['ansible_facts']['ens3']['ipv4']['address'] }} port 953 allow { any; } keys { "designate"; };
+    inet {{ hostvars[hostvars[inventory_hostname]['groups']['masters'][0]]['ansible_facts']['ens3']['ipv4']['address'] }} port 953 allow { any; } keys { "designate"; };
 };
 
 options {

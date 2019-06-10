@@ -1,5 +1,5 @@
 $TTL 86400	; 1 day
-@			IN SOA	{{ hostvars[inventory_hostname]['groups']['master'][0] }}.{{ default_zone }} root.{{ default_zone }} (
+@			IN SOA	{{ hostvars[inventory_hostname]['groups']['masters'][0] }}.{{ default_zone }} root.{{ default_zone }} (
 				2018010700 ; Serial
 				3600       ; Refresh (1 hour)
 				3600       ; Retry (1 hour)

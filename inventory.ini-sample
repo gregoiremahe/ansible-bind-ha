@@ -3,7 +3,7 @@ ns1a ansible_host=51.0.0.1 ip=10.0.0.1
 ns1b ansible_host=51.0.0.2 ip=10.0.0.2
 ns1c ansible_host=51.0.0.3 ip=10.0.0.3
 
-[master]
+[masters]
 ns1a
 
 [slaves]

@@ -17,12 +17,12 @@ zone "{{ default_zone }}" {
     type slave;
     file "data/db.defaultzone.local";
     masters {
-{% for server in hostvars[inventory_hostname]['groups']['master'] %}
+{% for server in hostvars[inventory_hostname]['groups']['masters'] %}
         {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
 {% endfor %}
     };
     allow-notify {
-{% for server in hostvars[inventory_hostname]['groups']['master'] %}
+{% for server in hostvars[inventory_hostname]['groups']['masters'] %}
         {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
 {% endfor %}
     };
@@ -32,12 +32,12 @@ zone "{{ default_reverse_zone }}" {
     type slave;
     file "data/db.reverse-defaultzone.local";
     masters {
-{% for server in hostvars[inventory_hostname]['groups']['master'] %}
+{% for server in hostvars[inventory_hostname]['groups']['masters'] %}
         {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
 {% endfor %}
     };
     allow-notify {
-{% for server in hostvars[inventory_hostname]['groups']['master'] %}
+{% for server in hostvars[inventory_hostname]['groups']['masters'] %}
         {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
 {% endfor %}
     };
