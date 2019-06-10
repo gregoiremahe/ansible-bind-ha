@@ -11,10 +11,12 @@ options {
     directory     "/var/cache/bind";
     recursion no;
     allow-query { any; };
-#    allow-transfer {
-#        localhost;
-#        192.168.1.6;
-#    }; # Todo slaves ip addresses here
+    allow-transfer {
+        localhost;
+{% for server in hostvars[inventory_hostname]['groups']['slaves'] %}
+        {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
+{% endfor %}
+    };
 
     allow-new-zones yes;
     request-ixfr no;
