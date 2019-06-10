@@ -1,0 +1,11 @@
+---
+- name: check general configuration
+  shell: named-checkconf
+
+- name: check zones
+  shell: named-checkzone {{item.name}} {{item.file}}
+  with_items:
+    - file: "/var/cache/bind/data/db.defaultzone.local"
+      name: "{{default_zone}}"
+    - file: "/var/cache/bind/data/db.reverse-defaultzone.local"
+      name: "{{default_reverse_zone}}"
