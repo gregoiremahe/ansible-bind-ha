@@ -1,0 +1,44 @@
+
+options {
+    listen-on port 53 { any; };
+    listen-on-v6 { none; };
+    directory   "/var/cache/bind";
+    dump-file   "/var/cache/bind/cache_dump.db";
+
+    recursion no;
+    allow-transfer { none; };
+
+    notify no;
+
+};
+
+# Internal zone definitions
+zone "{{ default_zone }}" {
+    type slave;
+    file "data/db.defaultzone.local";
+    masters {
+{% for server in hostvars[inventory_hostname]['groups']['master'] %}
+        {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
+{% endfor %}
+    };
+    allow-notify {
+{% for server in hostvars[inventory_hostname]['groups']['master'] %}
+        {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
+{% endfor %}
+    };
+};
+
+zone "{{ default_reverse_zone }}" {
+    type slave;
+    file "data/db.reverse-defaultzone.local";
+    masters {
+{% for server in hostvars[inventory_hostname]['groups']['master'] %}
+        {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
+{% endfor %}
+    };
+    allow-notify {
+{% for server in hostvars[inventory_hostname]['groups']['master'] %}
+        {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
+{% endfor %}
+    };
+};
