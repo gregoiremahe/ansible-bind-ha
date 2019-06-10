@@ -1,11 +1,4 @@
 ---
-- name: test
-  when: debug == true
-  debug:
-    msg: "{{ hostvars[item]['ansible_facts']['ens4']['ipv4']['address'] }}"
-  with_items:
-  - "{{ hostvars[inventory_hostname]['groups']['slaves'] }}"
-
 - name: create folder /var/cache/bind/data
   file:
     path: /var/cache/bind/data

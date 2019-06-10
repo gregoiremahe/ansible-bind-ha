@@ -1,8 +1,24 @@
 ---
 - name: Generate RNDC key
-  shell: rndc-confgen -a -b 512 -k designate -r /dev/urandom -c /etc/bind/rndc.key
+  when: inventory_hostname == groups['masters'][0]
+  shell: rndc-confgen -a -b 512 -k designate -r /dev/urandom -c /etc/bind/rndc.key && touch /root/.ansible_generate_rndc_key
   args:
     creates: /root/.ansible_generate_rndc_key
+
+- name: exporting rndc key step1
+  when: inventory_hostname == groups['masters'][0]
+  shell: cat /etc/bind/rndc.key | base64 -w 0
+  register: rndc_key_b64
+
+- name: "[DEBUG] print rndc key from fact"
+  when: debug == true
+  debug:
+    msg: "{{ hostvars[hostvars[inventory_hostname]['groups']['masters'][0]]['rndc_key_b64'].stdout }}"
+
+- name: importing rndc key
+  copy:
+    content: "{{ hostvars[hostvars[inventory_hostname]['groups']['masters'][0]].rndc_key_b64.stdout | b64decode }}"
+    dest: /etc/bind/rndc.key
 
 - name: Protecting key file
   file:
