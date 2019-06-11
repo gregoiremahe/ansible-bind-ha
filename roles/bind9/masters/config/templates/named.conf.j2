@@ -2,13 +2,20 @@ include "/etc/bind/rndc.key";
 
 # Allow rndc management
 controls {
-{% for server in hostvars[inventory_hostname]['groups']['masters'] %}
-    inet {{ hostvars[server]['ansible_facts']['ens3']['ipv4']['address'] }}
+    inet 127.0.0.1
         port 953
         allow { any; }
         keys { "designate"; };
 
+    inet {{ hostvars[inventory_hostname].ip }}
+        port 953
+        allow {
+{% for server in hostvars[inventory_hostname]['groups']['masters'] %}
+            {{ hostvars[server].ip }};
 {% endfor %}
+        }
+        keys { "designate"; };
+
 };
 
 options {
@@ -20,7 +27,7 @@ options {
     allow-transfer {
         localhost;
 {% for server in hostvars[inventory_hostname]['groups']['all'] %}
-        {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
+        {{ hostvars[server].ip }};
 {% endfor %}
     };
 

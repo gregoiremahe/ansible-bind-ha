@@ -10,8 +10,8 @@ $TTL 86400	; 1 day
 @		NS	{{ server }}.{{ default_zone }}
 {% endfor %}
 {% for server in hostvars[inventory_hostname]['groups']['all'] %}
-@		A	{{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }}
+@		A	{{ hostvars[server].ip }}
 {% endfor %}
 {% for server in hostvars[inventory_hostname]['groups']['all'] %}
-{{ server }}		A	{{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }}
+{{ server }}		A	{{ hostvars[server].ip }}
 {% endfor %}

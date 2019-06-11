@@ -1,4 +1,3 @@
-
 options {
     listen-on port 53 { any; };
     listen-on-v6 { none; };
@@ -18,12 +17,12 @@ zone "{{ default_zone }}" {
     file "data/db.defaultzone.local";
     masters {
 {% for server in hostvars[inventory_hostname]['groups']['masters'] %}
-        {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
+        {{ hostvars[server].ip }};
 {% endfor %}
     };
     allow-notify {
 {% for server in hostvars[inventory_hostname]['groups']['masters'] %}
-        {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
+        {{ hostvars[server].ip }};
 {% endfor %}
     };
 };
@@ -33,12 +32,12 @@ zone "{{ default_reverse_zone }}" {
     file "data/db.reverse-defaultzone.local";
     masters {
 {% for server in hostvars[inventory_hostname]['groups']['masters'] %}
-        {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
+        {{ hostvars[server].ip }};
 {% endfor %}
     };
     allow-notify {
 {% for server in hostvars[inventory_hostname]['groups']['masters'] %}
-        {{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }};
+        {{ hostvars[server].ip }};
 {% endfor %}
     };
 };

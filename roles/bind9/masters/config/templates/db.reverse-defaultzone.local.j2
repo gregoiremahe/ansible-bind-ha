@@ -11,8 +11,8 @@ $TTL 86400	; 1 day
 {% endfor %}
 @		PTR	{{ default_zone }}
 {% for server in hostvars[inventory_hostname]['groups']['all'] %}
-{{ server }}		A	{{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'] }}
+{{ server }}		A	{{ hostvars[server].ip }}
 {% endfor %}
 {% for server in hostvars[inventory_hostname]['groups']['all'] %}
-{{ hostvars[server]['ansible_facts']['ens4']['ipv4']['address'].split('.')[::-1][:reverse_size_ipv4] | join('.') }}		PTR	{{ server }}.{{ default_zone }}
+{{ hostvars[server].ip.split('.')[::-1][:reverse_size_ipv4] | join('.') }}		PTR	{{ server }}.{{ default_zone }}
 {% endfor %}
