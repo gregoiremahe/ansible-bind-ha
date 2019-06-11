@@ -13,6 +13,9 @@ controls {
 {% for server in hostvars[inventory_hostname]['groups']['masters'] %}
             {{ hostvars[server].ip }};
 {% endfor %}
+{% for allowip in rndc_allow_ip %}
+            {{ allowip }};
+{% endfor %}
         }
         keys { "designate"; };
 

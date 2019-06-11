@@ -1,5 +1,6 @@
 ---
 debug: true
 default_zone: dns.local.
-default_reverse_zone: 1.168.192.in-addr.arpa.
+default_reverse_zone: 0.0.10.in-addr.arpa.
 reverse_size_ipv4: 1
+rndc_allow_ip: [10.0.2.100]

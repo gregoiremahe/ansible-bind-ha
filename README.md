@@ -14,7 +14,9 @@ debug: true
 # The default internal zone name first configured
 default_zone: dns.local.
 # The default internal reverse zone name
-default_reverse_zone: 1.168.192.in-addr.arpa.
+default_reverse_zone: 0.0.10.in-addr.arpa.
 # The size of the records in the reverse zone. Must be greater equal than 1, or lower equal than 4
 reverse_size_ipv4: 1
+# List the ip you wants to allow to control rndc. Must be in the same subnet than ip field in inventory
+rndc_allow_ip: [10.0.2.100]
 ```
