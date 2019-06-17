@@ -1,7 +1,13 @@
+# ## Configure ip variable to clusterize your bind9 servers.
+# ##    It's better if this IP is from a private subnet (i.e. 10.0.0.0/8; 172.16.0.0/16 or 192.168.1.0/24), as the zone transfer will be done from this IP
+# ##    Can be the same ip as the default iface
+# ## Configure zoneip variable to create A record into your default zone.
+# ##    You can create a A record to that IP for you nameserver.
+# ##    Should be public IP, except if you wants to provision dns servers for your local network
 [all]
-ns1a ansible_host=51.0.0.1 ip=10.0.0.1
-ns1b ansible_host=51.0.0.2 ip=10.0.0.2
-ns1c ansible_host=51.0.0.3 ip=10.0.0.3
+ns1a ansible_host=51.0.0.1 zoneip=51.0.0.1 ip=10.0.0.1
+ns1b ansible_host=51.0.0.2 zoneip=51.0.0.2 ip=10.0.0.2
+ns1c ansible_host=51.0.0.3 zoneip=51.0.0.3 ip=10.0.0.3
 
 [masters]
 ns1a
