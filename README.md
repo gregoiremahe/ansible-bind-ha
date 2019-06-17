@@ -1,6 +1,6 @@
 # ansible-bind-ha
 
-This is a ansible playbook to create high available dns authoritative servers with bind9 on debian9
+This is a ansible playbook to create scalable and high available dns authoritative servers with bind9 on debian9
 
 First, you need to copy inventory.ini-sample :
 `cp inventory.ini-sample inventory.ini`
@@ -20,3 +20,4 @@ reverse_size_ipv4: 1
 # List the ip you wants to allow to control rndc. Must be in the same subnet than ip field in inventory
 rndc_allow_ip: [10.0.2.100]
 ```
+
