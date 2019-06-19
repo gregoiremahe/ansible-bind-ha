@@ -21,6 +21,11 @@ controls {
 
 };
 
+# Allow calls for statistics management
+statistics-channels {
+    inet {{ hostvars[inventory_hostname].ip }} port 8053 allow { any; };
+};
+
 options {
     listen-on port 53 { any; };
     listen-on-v6 { any; };

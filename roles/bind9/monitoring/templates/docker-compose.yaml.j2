@@ -1,0 +1,13 @@
+version: '2'
+services:
+  node_exporter:
+    image: prom/node-exporter
+    ports:
+      - "9100:9100"
+    restart: always
+  bind_exporter:
+    image: gregovh/bind_exporter
+    command: bind_exporter -bind.stats-url http://{{ hostvars[inventory_hostname].ip }}:8053/
+    ports:
+      - "9119:9119"
+    restart: always
