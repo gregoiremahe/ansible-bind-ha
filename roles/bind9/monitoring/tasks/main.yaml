@@ -1,0 +1,38 @@
+---
+- name: Install prerequisites
+  apt:
+    name: "{{item}}"
+  with_items:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - software-properties-common
+
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+
+- name: Add Docker APT repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+
+- name: Install Docker
+  apt:
+    name: docker-ce
+
+- name: Download docker compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.24.0/docker-compose-Linux-x86_64
+    dest: /usr/bin/docker-compose
+
+- name: execute permissions
+  file:
+    mode: u+rwx
+    path: /usr/bin/docker-compose
+
+- name: templating docker-compose.yaml
+  template:
+    src: ./docker-compose.yaml.j2
+    dest: /root/docker-compose.yaml
+  notify:
+  - exporters-restart

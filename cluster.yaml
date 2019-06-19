@@ -25,4 +25,9 @@
 - hosts: slaves
   gather_facts: false
   roles:
-    - { role: bind9/slaves/check, tags: bing9-slaves-check }
+    - { role: bind9/slaves/check, tags: bind9-slaves-check }
+
+- hosts: all
+  gather_facts: false
+  roles:
+    - { role: bind9/monitoring, tags: bind9-monitoring }
